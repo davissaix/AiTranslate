@@ -1,16 +1,17 @@
 import React from 'react';
-import { BrowserRouter } from "react-router-dom";
 import Header from '../header/Header';
+import { ViewPort } from './styles';
 import Footer from '../footer/Footer';
 import Layout from '../../container/Layout';
 
+
 function App() {
   return (
-    <BrowserRouter className="App">
+    <ViewPort className="App">
       <Header/>
       <Layout />
       <Footer/>
-    </BrowserRouter>
+    </ViewPort>
   );
 }
 

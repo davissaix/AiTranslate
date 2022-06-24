@@ -2,12 +2,14 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import ReactCountryFlag from "react-country-flag"
 import {List, Container, Flag} from './styles'
-// import {goClicke} from './functions/goClick'
+import { Link } from "react-router-dom";
+import { useUserContext } from '../UserProvider'
 
 
 
 
-function CountryFlags() {
+
+function CountryFlags({ sendChildToParent }) {
     const [english, setEnglish] = useState(1)
     const [germany, setGermany] = useState(1)
     const [france, setFrance] = useState(1)
@@ -32,15 +34,49 @@ function CountryFlags() {
     const [chinese1, setChinese1] = useState('translateY(0px)')
     const [japanese1, setJapanese1] = useState('translateY(0px)')
 
+    const [selectedFlags, setSelectedFlags] = useState({})
+
     const isSelected = []
     const languages = [english, germany, france, brazil, russian, italian, spanish, turkish, chinese, japanese]
     
+    // export function onAddBtnClick  ()  {
+        
+    //     return (
+    //         <div>
+    //             <ReactCountryFlag className="emojiFlag" countryCode="DE" aria-label="English"
+    //     style={{
+    //         fontSize: '2em',
+    //         lineHeight: '2em',  
+    //     }} svg/>
+    //         </div>
+            
+    //     )      
+    // //   inputFlag =   key={inputFlag.length}
+       
+    // };
+    // const reactFlags = () => {
+    //     return(
+    //         <ReactCountryFlag className="emojiFlag" countryCode="DE" aria-label="English"
+    //             style={{
+    //                 fontSize: '2em',
+    //                 lineHeight: '2em',  
+    //             }} svg/>      
+    //     )
+    // }
+    const langSelected = []
+    
+    
+    const dataFromChild = "Hey, Im coming from child component";
+      
+    
     function goButton (){
-        console.log(languages)
+        // console.log(languages)
         const selection = []
         const language = ['EN', 'DE', 'FR', 'BR', 'RU', 'IT', 'ES', 'TR', 'ZH', 'JA']
-        const langSelected = []
-        const a = languages.map (( lang, index) => { 
+        
+        // const inputFlag = [];
+
+        languages.map (( lang, index) => { 
             if (lang === 0.5){
                 selection.push(index) 
             }})
@@ -49,36 +85,19 @@ function CountryFlags() {
             for (const elements of iterator){
             if (indice === (elements)){
                 langSelected.push(lengua)
-            }}})      
+            }}})
+            
+         
         console.log(selection)
         console.log(langSelected)
-    }
+        // onAddBtnClick();
+        // console.log(inputFlag)
+       
+    } 
 
-    // function goClick() {
-    //     if (english === 0.5) {
-    //         isSelected.push('GB');
-    //         console.log(isSelected)
-    //     }
-    //     // console.log(isSelected)
-
-    // }
-// function array (country){
-//     const recorreArray = languages => languages.forEach(item => {
-//         console.log(languages)
-//             if (country === 0.5) {
-//             isSelected.push(country);
-//             console.log(isSelected)
-//         }})
-//     console.log(languages)
-// }
     
-
-    //  const pushIsSelected = (code) => {
-        
-    //         isSelected.push(code)
-    //         console.log(isSelected)
-          
-    // }
+  
+    
     
     return (
         <Container className='container-list'>
@@ -94,18 +113,7 @@ function CountryFlags() {
                 } else {
                     setEnglish(1);
                     setEnglish1('translateY(0px)')
-                // for( var i = 0; i < isSelected.length; i++){ 
-    
-                //     if ( isSelected[i] === 'GB'){ 
-                
-                //         isSelected.splice(i, 1); 
-                //     }
-                
-                // }
-                }
-                
-            }
-            }
+                }}}
              > 
                 <ReactCountryFlag
                 className="emojiFlag"
@@ -127,14 +135,6 @@ function CountryFlags() {
                 } else {
                     setGermany(1)
                 setGermany1('translateY(0px)')
-                //   for( var i = 0; i < isSelected.length; i++){ 
-    
-                // if ( isSelected[i] === 'DE'){ 
-                
-                //          isSelected.splice(i, 1); 
-                //      }
-                
-                //  }
                  console.log(isSelected)
                 }    
             }
@@ -306,8 +306,11 @@ function CountryFlags() {
             </Flag>   
             </List>
             <div>
+                <Link to="/translate">
                 <Button onClick={goButton} >Go</Button>
+                </Link>
             </div>
+            
         </Container>
     )
 }
