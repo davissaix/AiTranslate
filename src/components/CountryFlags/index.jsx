@@ -1,120 +1,65 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import ReactCountryFlag from "react-country-flag"
 import {List, Container, Flag} from './styles'
 import { Link } from "react-router-dom";
-import { useUserContext } from '../UserProvider'
+import { UserContext } from '../UserProvider'
 
 
 
 
 
 function CountryFlags({ sendChildToParent }) {
-    const [english, setEnglish] = useState(1)
-    const [germany, setGermany] = useState(1)
-    const [france, setFrance] = useState(1)
-   
-    const [brazil, setBrazil] = useState(1)
-    const [russian, setRussian] = useState(1)
-    const [italian, setItalian] = useState(1)
-    const [spanish, setSpanish] = useState(1)
-    const [turkish, setTurkish] = useState(1)
-    const [chinese, setChinese] = useState(1)
-    const [japanese, setJapanese] = useState(1)
-    // translate state
-    const [english1, setEnglish1] = useState('translateY(0px)')
-    const [germany1, setGermany1] = useState('translateY(0px)')
-    const [france1, setFrance1] = useState('translateY(0px)')
+    const {Ingles} = React.useContext(UserContext);
+    const {english} = React.useContext(UserContext);
+    const {english1} = React.useContext(UserContext);
     
-    const [brazil1, setBrazil1] = useState('translateY(0px)')
-    const [russian1, setRussian1] = useState('translateY(0px)')
-    const [italian1, setItalian1] = useState('translateY(0px)')
-    const [spanish1, setSpanish1] = useState('translateY(0px)')
-    const [turkish1, setTurkish1] = useState('translateY(0px)')
-    const [chinese1, setChinese1] = useState('translateY(0px)')
-    const [japanese1, setJapanese1] = useState('translateY(0px)')
+    const {Aleman} = React.useContext(UserContext);
+    const {germany} = React.useContext(UserContext);
+    const {germany1} = React.useContext(UserContext);
 
-    const [selectedFlags, setSelectedFlags] = useState({})
+    const {Frances} = React.useContext(UserContext);
+    const {france} = React.useContext(UserContext);
+    const {france1} = React.useContext(UserContext);
 
-    const isSelected = []
-    const languages = [english, germany, france, brazil, russian, italian, spanish, turkish, chinese, japanese]
-    
-    // export function onAddBtnClick  ()  {
-        
-    //     return (
-    //         <div>
-    //             <ReactCountryFlag className="emojiFlag" countryCode="DE" aria-label="English"
-    //     style={{
-    //         fontSize: '2em',
-    //         lineHeight: '2em',  
-    //     }} svg/>
-    //         </div>
-            
-    //     )      
-    // //   inputFlag =   key={inputFlag.length}
-       
-    // };
-    // const reactFlags = () => {
-    //     return(
-    //         <ReactCountryFlag className="emojiFlag" countryCode="DE" aria-label="English"
-    //             style={{
-    //                 fontSize: '2em',
-    //                 lineHeight: '2em',  
-    //             }} svg/>      
-    //     )
-    // }
-    const langSelected = []
-    
-    
-    const dataFromChild = "Hey, Im coming from child component";
-      
-    
-    function goButton (){
-        // console.log(languages)
-        const selection = []
-        const language = ['EN', 'DE', 'FR', 'BR', 'RU', 'IT', 'ES', 'TR', 'ZH', 'JA']
-        
-        // const inputFlag = [];
+    const {Brasil} = React.useContext(UserContext);
+    const {brazil} = React.useContext(UserContext);
+    const {brazil1} = React.useContext(UserContext);
 
-        languages.map (( lang, index) => { 
-            if (lang === 0.5){
-                selection.push(index) 
-            }})
-        language.map((lengua, indice) => {
-            var iterator = selection.values();
-            for (const elements of iterator){
-            if (indice === (elements)){
-                langSelected.push(lengua)
-            }}})
-            
-         
-        console.log(selection)
-        console.log(langSelected)
-        // onAddBtnClick();
-        // console.log(inputFlag)
-       
-    } 
+    const {Rusia} = React.useContext(UserContext);
+    const {russian} = React.useContext(UserContext);
+    const {russian1} = React.useContext(UserContext);
 
+    const {Italia} = React.useContext(UserContext);
+    const {italian} = React.useContext(UserContext);
+    const {italian1} = React.useContext(UserContext);
+
+    const {Espana} = React.useContext(UserContext);
+    const {spanish} = React.useContext(UserContext);
+    const {spanish1} = React.useContext(UserContext);
     
+    const {Turquia} = React.useContext(UserContext);
+    const {turkish} = React.useContext(UserContext);
+    const {turkish1} = React.useContext(UserContext);
+
+    const {China} = React.useContext(UserContext);
+    const {chinese} = React.useContext(UserContext);
+    const {chinese1} = React.useContext(UserContext);
+
+    const {Japon} = React.useContext(UserContext);
+    const {japanese} = React.useContext(UserContext);
+    const {japanese1} = React.useContext(UserContext);
   
-    
-    
+    //---------------------------------------------------
+    const {GoButton} = React.useContext(UserContext);
+   
     return (
         <Container className='container-list'>
             <p>Select your Languages</p>
 
             <List className='country-flag'>
-                <Flag opacity={english} transform={english1} onClick ={()=> {
-                if (english===1 && english1==='translateY(0px)' ) {
-                    setEnglish(0.5);
-                    setEnglish1('translateY(-7px)');
-                   
-                   
-                } else {
-                    setEnglish(1);
-                    setEnglish1('translateY(0px)')
-                }}}
-             > 
+                <Flag opacity={english} transform={english1} onClick ={()=> {Ingles()}}
+                > 
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode='GB'
@@ -125,20 +70,9 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="English"
                 svg/>
-            </Flag>   
+                </Flag>   
 
-            <Flag transform={germany1} opacity={germany} onClick ={()=> {
-                if (germany===1 && germany1==='translateY(0px)' ) {
-                    setGermany(0.5)
-                    setGermany1('translateY(-7px)')  
-                    
-                } else {
-                    setGermany(1)
-                setGermany1('translateY(0px)')
-                 console.log(isSelected)
-                }    
-            }
-            } > 
+                <Flag transform={germany1} opacity={germany} onClick ={()=> {Aleman()}} > 
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="DE"
@@ -149,15 +83,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="German"
                 svg/>
-            </Flag>   
-            <Flag transform={france1} opacity ={france} onClick ={()=> {
-                if (france===1 && france1==='translateY(0px)' ) {
-                setFrance(0.5)
-                setFrance1('translateY(-7px)')    
-                } else {
-                setFrance(1)
-                setFrance1('translateY(0px)')
-            }}}>
+                </Flag>   
+                <Flag transform={france1} opacity ={france} onClick ={()=> {Frances()}}>
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="FR"
@@ -168,15 +95,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="French"
                 svg/>
-            </Flag>   
-            <Flag transform={brazil1} opacity ={brazil} onClick ={()=> {
-                if (brazil===1 && brazil1==='translateY(0px)' ) {
-                    setBrazil(0.5)
-                    setBrazil1('translateY(-7px)')    
-                    } else {
-                    setBrazil(1)
-                    setBrazil1('translateY(0px)')
-                }}}>
+                </Flag>   
+                <Flag transform={brazil1} opacity ={brazil} onClick ={()=> {Brasil()}}>
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="BR"
@@ -187,15 +107,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="Portuguese"
                 svg/>
-            </Flag>   
-            <Flag transform={russian1} opacity ={russian} onClick ={()=> {
-                if (russian===1 && russian1==='translateY(0px)' ) {
-                    setRussian(0.5)
-                    setRussian1('translateY(-7px)')    
-                    } else {
-                    setRussian(1)
-                    setRussian1('translateY(0px)')
-                }}}> 
+                </Flag>   
+                <Flag transform={russian1} opacity ={russian} onClick ={()=> {Rusia()}}> 
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="RU"
@@ -206,15 +119,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="Russian"
                 svg/>
-            </Flag>   
-            <Flag transform={italian1} opacity ={italian} onClick ={()=> {
-                if (italian===1 && italian1==='translateY(0px)' ) {
-                    setItalian(0.5)
-                    setItalian1('translateY(-7px)')    
-                    } else {
-                    setItalian(1)
-                    setItalian1('translateY(0px)')
-                }}}>
+                </Flag>   
+                <Flag transform={italian1} opacity ={italian} onClick ={()=> {Italia()}}>
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="IT"
@@ -225,15 +131,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="Italian"
                 svg/>
-            </Flag>   
-            <Flag transform={spanish1} opacity ={spanish} onClick ={()=> {
-                if (spanish===1 && spanish1==='translateY(0px)' ) {
-                    setSpanish(0.5)
-                    setSpanish1('translateY(-7px)')    
-                    } else {
-                    setSpanish(1)
-                    setSpanish1('translateY(0px)')
-                }}}>
+                </Flag>   
+                <Flag transform={spanish1} opacity ={spanish} onClick ={()=> {Espana()}}>
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="ES"
@@ -244,15 +143,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="Spanish"
                 svg/>
-            </Flag>   
-            <Flag transform={turkish1} opacity ={turkish} onClick ={()=> {
-                if (turkish===1 && turkish1==='translateY(0px)' ) {
-                    setTurkish(0.5)
-                    setTurkish1('translateY(-7px)')    
-                    } else {
-                    setTurkish(1)
-                    setTurkish1('translateY(0px)')
-                }}}> 
+                </Flag>   
+                <Flag transform={turkish1} opacity ={turkish} onClick ={()=> {Turquia()}}> 
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="TR"
@@ -263,15 +155,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="Turkish"
                 svg/>
-            </Flag>   
-            <Flag transform={chinese1} opacity ={chinese} onClick ={()=> {
-                if (chinese===1 && chinese1==='translateY(0px)' ) {
-                    setChinese(0.5)
-                    setChinese1('translateY(-7px)')    
-                    } else {
-                    setChinese(1)
-                    setChinese1('translateY(0px)')
-                }}}>
+                </Flag>   
+                <Flag transform={chinese1} opacity ={chinese} onClick ={()=> {China()}}>
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="CN"
@@ -282,17 +167,8 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="Chinese"
                 svg/>
-            </Flag>   
-            <Flag transform={japanese1} opacity ={japanese} onClick ={()=> {
-                if (japanese===1 && japanese1==='translateY(0px)' ) {
-                    setJapanese(0.5)
-                    setJapanese1('translateY(-7px)')   
-                    console.log(japanese+'selected') 
-                    } else {
-                    setJapanese(1)
-                    setJapanese1('translateY(0px)')
-                    console.log(japanese+'noselected')
-                }}}>
+                </Flag>   
+                <Flag transform={japanese1} opacity ={japanese} onClick ={()=> {Japon()}}>
                 <ReactCountryFlag
                 className="emojiFlag"
                 countryCode="JP"
@@ -303,11 +179,11 @@ function CountryFlags({ sendChildToParent }) {
                 }}
                 aria-label="Japanese"
                 svg/>
-            </Flag>   
+                </Flag>   
             </List>
             <div>
                 <Link to="/translate">
-                <Button onClick={goButton} >Go</Button>
+                <Button onClick={GoButton}>Go</Button>
                 </Link>
             </div>
             
