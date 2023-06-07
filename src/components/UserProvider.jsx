@@ -149,7 +149,7 @@ function UserProvider (props){
     return (
         <UserContext.Provider value={{
             LangSelected,
-            translate,
+            // translate,
             GoButton,
             Ingles,
             Aleman,

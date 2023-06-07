@@ -1,46 +1,61 @@
-import React from 'react'
-// import axios from 'axios'
-import styled from 'styled-components'
-import ReactCountryFlag from "react-country-flag"
-import { UserContext } from '../UserProvider'
+import React, { useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import ReactCountryFlag from 'react-country-flag';
+import { UserContext } from '../UserProvider';
 
+async function translateText(text) {
+  const options = {
+    method: 'GET',
+    url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
+    params: {
+      langpair: 'en|it',
+      q: text,
+      mt: '1',
+      onlyprivate: '0',
+      de: 'a@b.c',
+    },
+    headers: {
+      'X-RapidAPI-Key': '3730f2a775msh0140bb14ad28e72p170f94jsn65f4586c35c4',
+      'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com',
+    },
+  };
 
+  try {
+    const response = await axios.request(options);
+    console.log(response.data);
+    // Do something with the translation response, such as updating the state or displaying it in your component
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-function TranslateInput () {
-  
-  const {LangSelected} = React.useContext(UserContext);
-  // const {translate} = React.useContext(UserContext);
+function TranslateInput() {
+  const [inputText, setInputText] = useState('');
+
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
+
+  const handleTranslateClick = () => {
+    translateText(inputText);
+  };
+
+  const { LangSelected } = React.useContext(UserContext);
+
   return (
     <Container>
       <Container2>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[0]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[1]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[2]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[3]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[4]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[5]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[6]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[7]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[8]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/>
-        <ReactCountryFlag className="emojiFlag" countryCode={LangSelected[9]} aria-label="English"
-        style={{fontSize: '2em',lineHeight: '2em'}} svg/> 
+        {/* ReactCountryFlag components */}
       </Container2>
-      <Input type="text" placeholder= 'What do you want to translate?'/>
-      {/* {translate()} */}
-      <Button>Translate</Button>
+      <Input type="text" value={inputText} onChange={handleInputChange} placeholder="What do you want to translate?" />
+
+      <Button onClick={handleTranslateClick}>Translate</Button>
     </Container>
-  )
+  );
 }
-export default TranslateInput
+
+export default TranslateInput;
 
 const Input = styled.input`
     width: 85vw;
