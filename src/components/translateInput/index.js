@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import ReactCountryFlag from 'react-country-flag';
+import ReactCountryFlag from "react-country-flag";
 import { UserContext } from '../UserProvider';
+import LanguageFlags from '../LanguageFlags';
+import DropDown from '../DropDown';
 
 async function translateText(text) {
   const options = {
@@ -43,13 +45,37 @@ function TranslateInput() {
 
   const { LangSelected } = React.useContext(UserContext);
 
+  const countryFlags = LangSelected.map((country, index) => (
+      
+      <ReactCountryFlag 
+      key={index}
+        className="emojiFlag"
+        countryCode={country}
+        style={{
+          fontSize: '5em',
+          lineHeight: '5em',
+        }}
+        svg
+      />
+  )
+  );
+
   return (
     <Container>
       <Container2>
-        {/* ReactCountryFlag components */}
+        {countryFlags}
       </Container2>
-      <Input type="text" value={inputText} onChange={handleInputChange} placeholder="What do you want to translate?" />
-
+    
+       <Container2>
+        <p>from</p>
+        <DropDown/>
+         <Input type="text" style={{ padding: 0, margin:0 }} value={inputText} onChange={handleInputChange} placeholder="What do you want to translate?" />
+       </Container2>
+        
+    
+       
+      
+      
       <Button onClick={handleTranslateClick}>Translate</Button>
     </Container>
   );
@@ -81,6 +107,14 @@ const Container2 = styled.div`
     gap: 5vw;
     justify-content: center;
     align-items: center;
+`
+const Container3 = styled.div`                   
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5vw;
+    justify-content: center;
+    align-items: center;
+
 `
 const Button = styled.button`
     width: 140px;
