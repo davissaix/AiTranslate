@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+import { UserContext } from '../UserProvider';
 
 const DropDown = () => {
-  const [selectedOption, setSelectedOption] = useState('en');
+  // const [selectedOption, setSelectedOption] = useState('en');
 
-  const handleOptionChange = (event) => {
-    const selectedValue = event.target.value;
-    setSelectedOption(selectedValue);
-    // You can store the selected option in another state variable or perform any other action
-    // For example, you can pass the selected option to a callback function or an API request.
-    console.log('Selected language:', selectedValue);
-  };
-
+  // const handleOptionChange = (event) => {
+  //   const selectedValue = event.target.value;
+  //   setSelectedOption(selectedValue);
+  //   // You can store the selected option in another state variable or perform any other action
+  //   // For example, you can pass the selected option to a callback function or an API request.
+  //   console.log('Selected language:', selectedValue);
+    
+  // };
+  const { selectedOption, handleOptionChange } = React.useContext(UserContext);
+  console.log('Selected option:', selectedOption);
   return (
     <div>
       

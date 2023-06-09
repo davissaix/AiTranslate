@@ -3,15 +3,17 @@ import axios from 'axios';
 import styled from 'styled-components';
 import ReactCountryFlag from "react-country-flag";
 import { UserContext } from '../UserProvider';
-import LanguageFlags from '../LanguageFlags';
+// import LanguageFlags from '../LanguageFlags';
 import DropDown from '../DropDown';
 
 async function translateText(text) {
+ 
+
   const options = {
     method: 'GET',
     url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
     params: {
-      langpair: 'en|it',
+      langpair: `en|it`,
       q: text,
       mt: '1',
       onlyprivate: '0',
@@ -42,8 +44,11 @@ function TranslateInput() {
   const handleTranslateClick = async () => {
     await translateText(inputText);
   };
-
+  // const { selectedValue } = React.useContext(UserContext);
+ 
+  
   const { LangSelected } = React.useContext(UserContext);
+  
 
   const countryFlags = LangSelected.map((country, index) => (
       
@@ -59,7 +64,8 @@ function TranslateInput() {
       />
   )
   );
-
+  
+  
   return (
     <Container>
       <Container2>
@@ -107,14 +113,6 @@ const Container2 = styled.div`
     gap: 5vw;
     justify-content: center;
     align-items: center;
-`
-const Container3 = styled.div`                   
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5vw;
-    justify-content: center;
-    align-items: center;
-
 `
 const Button = styled.button`
     width: 140px;

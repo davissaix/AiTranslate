@@ -117,7 +117,8 @@ function UserProvider (props){
  //GoButton
     
     const languages = [english, germany, france, brazil, russian, italian, spanish, turkish, chinese, japanese]
-    const LangSelected = []
+    // const LangSelected = []
+    const [LangSelected, setLangSelected] = useState([]);
     function GoButton (){
    
         const selection = []
@@ -153,9 +154,19 @@ function UserProvider (props){
         console.log(selection)
         console.log(mappedArray)
     } 
+    const [selectedOption, setSelectedOption] = useState('en');
 
+  const handleOptionChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+    console.log('Selected language:', selectedValue);
+  };
     return (
         <UserContext.Provider value={{
+            selectedOption,
+            handleOptionChange,
+            // setSelectedValue,
+            // selectedValue,
             LangSelected,
             // translate,
             GoButton,
