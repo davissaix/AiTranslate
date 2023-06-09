@@ -19,12 +19,12 @@ const DropDown = () => {
         <option value="fr">French</option>
         <option value="de">German</option>
         <option value="es">Spanish</option>
-        <option value="es">portuguese</option>
-        <option value="es">Russian</option>
-        <option value="es">Italian</option>
-        <option value="es">Turkish</option>
-        <option value="es">Chinese</option>
-        <option value="es">Japanese</option>
+        <option value="pt">portuguese</option>
+        <option value="ru">Russian</option>
+        <option value="it">Italian</option>
+        <option value="tr">Turkish</option>
+        <option value="zh">Chinese</option>
+        <option value="jp">Japanese</option>
 
 
       </select>

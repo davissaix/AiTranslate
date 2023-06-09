@@ -132,20 +132,28 @@ function UserProvider (props){
             if (indice === (elements)){
             LangSelected.push(lengua)
         }}})
+        const mapLanguageCodes = (languageArray) => {
+            const languageMapping = {
+              GB: 'en',
+              DE: 'de',
+              FR: 'fr',
+              BR: 'pt',
+              RU: 'ru',
+              IT: 'it',
+              ES: 'es',
+              TR: 'tr',
+              CN: 'zh',
+              JP: 'jp',
+            };
+          
+            const mappedArray = languageArray.map((code) => languageMapping[code] || code);
+            return mappedArray;
+          };
+          const mappedArray = mapLanguageCodes(LangSelected)
         console.log(selection)
-        console.log(LangSelected)
+        console.log(mappedArray)
     } 
-//     const API_KEY = 'ff6374ca99b3252c66f2b521a9de5875130c0745'
-//     const text='hi my friends'
-//     async function translate(text) {
-//     let res = await axios.post(
-//     `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-//     { q: text, target: "es" }
-//     );
-//     let translation = res.data.data.translations[0].translatedText;
-//     return translation;
-//   }
-  
+
     return (
         <UserContext.Provider value={{
             LangSelected,

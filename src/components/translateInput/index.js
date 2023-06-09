@@ -39,8 +39,8 @@ function TranslateInput() {
     setInputText(event.target.value);
   };
 
-  const handleTranslateClick = () => {
-    translateText(inputText);
+  const handleTranslateClick = async () => {
+    await translateText(inputText);
   };
 
   const { LangSelected } = React.useContext(UserContext);
