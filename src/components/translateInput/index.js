@@ -63,7 +63,13 @@ function TranslateInput() {
 
         const response = await axios.request(options);
         console.log(`Translation Response for ${lang}:`, response.data); // log the full response data for each language
-        return response.data.responseData.translatedText;
+        const matches = response.data.matches;
+        const translations = matches.map(match => match.translation.toLowerCase());
+        const uniqueTranslations = new Set(translations);
+        const finalTranslation = Array.from(uniqueTranslations).join(" / ");
+
+        return finalTranslation;
+        
       }));
 
       // Set the responses array as the response state
@@ -73,7 +79,19 @@ function TranslateInput() {
       console.error(error);
     }
   }
-
+  const languageToCountryCode = {
+    'en': 'GB',
+    'de': 'DE',
+    'fr': 'FR',
+    'pt': 'BR',
+    'ru': 'RU',
+    'it': 'IT',
+    'es': 'ES',
+    'tr': 'TR',
+    'zh': 'CN',
+    'ja': 'JP',
+    // add more language to country code mappings if needed
+  }
   function Modal({ isOpen, onClose, children }) {
     if (!isOpen) {
       return null;
