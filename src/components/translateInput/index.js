@@ -10,15 +10,20 @@ function TranslateInput() {
   const [inputText, setInputText] = useState('');
   const [response, setResponse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { LangSelected, selectedOption } = useContext(UserContext);
+  const { LangSelected, selectedOption, mappedArray } = useContext(UserContext);
 
   const handleInputChange = (event) => {
     setInputText(event.target.value);
   };
 
   const handleTranslateClick = async () => {
-    console.log('Selected option input:',selectedOption);
-  await translateText(inputText, selectedOption);
+    console.log("Translate button clicked");
+    console.log('Selected option input:', selectedOption);
+    if (mappedArray) {
+      await translateText(inputText, selectedOption, mappedArray);
+    } else {
+      console.log('mappedArray is not defined yet');
+    }
   };
 
   const countryFlags = LangSelected.map((country, index) => (
@@ -34,31 +39,35 @@ function TranslateInput() {
     />
   ));
 
-  async function translateText(text, selectedOption) {
-    const options = {
-      method: 'GET',
-      url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
-      params: {
-        langpair: `${selectedOption}|it`,
-        q: text,
-        mt: '1',
-        onlyprivate: '0',
-        de: 'a@b.c',
-      },
-      headers: {
-        'X-RapidAPI-Key': '3730f2a775msh0140bb14ad28e72p170f94jsn65f4586c35c4',
-        'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com',
-      },
-    };
-
+  async function translateText(text, selectedOption, mappedArray) {
     try {
-      const response = await axios.request(options);
-      console.log(response.data);
+      console.log("translateText function invoked");
+      console.log("mappedArray:", mappedArray);
+      // For each language in mappedArray, perform a translation request
+      const responses = await Promise.all(mappedArray.map(async (lang) => {
+        const options = {
+          method: 'GET',
+          url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
+          params: {
+            langpair: `${selectedOption}|${lang}`,
+            q: text,
+            mt: '1',
+            onlyprivate: '0',
+            de: 'a@b.c',
+          },
+          headers: {
+            'X-RapidAPI-Key': '3730f2a775msh0140bb14ad28e72p170f94jsn65f4586c35c4',
+            'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com',
+          },
+        };
 
-      // Access translatedText from responseData
-      const translatedText = response.data.responseData.translatedText;
-      setResponse(translatedText);
+        const response = await axios.request(options);
+        console.log(`Translation Response for ${lang}:`, response.data); // log the full response data for each language
+        return response.data.responseData.translatedText;
+      }));
 
+      // Set the responses array as the response state
+      setResponse(responses);
       setIsModalOpen(true);
     } catch (error) {
       console.error(error);
@@ -94,8 +103,14 @@ function TranslateInput() {
 
       <Button onClick={handleTranslateClick}>Translate</Button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {/* Display response (the translated text) */}
-        <div>{response}</div>
+        {/* Only map over the response array if response is not null */}
+        {response !== null ? (
+          response.map((translatedText, index) => (
+            <div key={index}>{translatedText}</div>
+          ))
+        ) : (
+          <div>No translations available.</div>
+        )}
       </Modal>
     </Container>
   );

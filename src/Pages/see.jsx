@@ -22,19 +22,19 @@ async function translateText(text, selectedOption, mappedArray) {
         return response.data.responseData.translatedText;
       }));
   
-      // Combine the translated responses into a single string
-      const translatedText = responses.join('\n');
-  
-      setResponse(translatedText);
+      // Set the responses array as the response state
+      setResponse(responses);
       setIsModalOpen(true);
     } catch (error) {
       console.error(error);
     }
   }
   
-  // And change handleTranslateClick as below
-  const handleTranslateClick = async () => {
-    console.log('Selected option input:', selectedOption);
-    await translateText(inputText, selectedOption, mappedArray);
-  };
+  // And in your JSX:
+  <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+    {/* Map over the response array to create a div for each translated text */}
+    {response.map((translatedText, index) => (
+      <div key={index}>{translatedText}</div>
+    ))}
+  </Modal>
   
