@@ -100,9 +100,24 @@ function TranslateInput() {
     return (
       <div>
         <div>
-          {children}
+          {children.map((child, index) => {
+            const countryCode = languageToCountryCode[mappedArray[index]];
+            return (
+              <TranslationBox key={index}>
+                <RoundedFlagContainer>
+                <ReactCountryFlag
+                  className="emojiFlag"
+                  countryCode={countryCode}
+                  style={{ fontSize: '2em', lineHeight: '2em', marginRight: '1em' }}
+                  svg
+                />
+                </RoundedFlagContainer>
+                {child}
+              </TranslationBox>
+            );
+          })}
         </div>
-        <button onClick={onClose}>Close</button>
+        <CloseButton onClick={onClose}>Close</CloseButton>
       </div>
     );
   }
@@ -120,8 +135,8 @@ function TranslateInput() {
       </Container2>
 
       <Button onClick={handleTranslateClick}>Translate</Button>
+      
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {/* Only map over the response array if response is not null */}
         {response !== null ? (
           response.map((translatedText, index) => (
             <div key={index}>{translatedText}</div>
@@ -155,15 +170,17 @@ justify-content: space-between;
 align-items: center;
 `
 const Container2 = styled.div`                   
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5vw;
-    justify-content: center;
-    align-items: center;
+display: flex;
+flex-wrap: wrap;
+gap: 5vw;
+justify-content: center;
+align-items: center;
+margin-bottom: 20px;   // add some margin at the bottom
 `
 const Button = styled.button`
     width: 140px;
     height: 45px;
+    margin-top: 20px;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     text-transform: uppercase;
@@ -186,4 +203,31 @@ const Button = styled.button`
     transform: translateY(-7px);
   }
 
+`
+const TranslationBox = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  margin: 1em 0;
+  padding: 1em;
+`
+const CloseButton = styled.button`
+border-radius: 45px;
+  background-color: #f4f4f4;
+  border: 1px solid #333;
+  color: #333;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 1em;
+
+  &:hover {
+    background-color: #333;
+    color: #f4f4f4;
+  }
+`
+const RoundedFlagContainer = styled.div`
+  display: inline-block;
+  overflow: hidden;
+ 
 `

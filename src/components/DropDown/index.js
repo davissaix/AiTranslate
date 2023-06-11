@@ -1,23 +1,14 @@
 import React, { useState } from 'react';
 import { UserContext } from '../UserProvider';
+import styled from 'styled-components';
 
 const DropDown = () => {
-  // const [selectedOption, setSelectedOption] = useState('en');
-
-  // const handleOptionChange = (event) => {
-  //   const selectedValue = event.target.value;
-  //   setSelectedOption(selectedValue);
-  //   // You can store the selected option in another state variable or perform any other action
-  //   // For example, you can pass the selected option to a callback function or an API request.
-  //   console.log('Selected language:', selectedValue);
-    
-  // };
   const { selectedOption, handleOptionChange } = React.useContext(UserContext);
   console.log('Selected option:', selectedOption);
   return (
     <div>
       
-      <select id="language" value={selectedOption} onChange={handleOptionChange}>
+      <StyledSelect id="language" value={selectedOption} onChange={handleOptionChange}>
         <option value="en">English</option>
         <option value="fr">French</option>
         <option value="de">German</option>
@@ -30,9 +21,14 @@ const DropDown = () => {
         <option value="jp">Japanese</option>
 
 
-      </select>
+      </StyledSelect>
     </div>
   );
 };
 
 export default DropDown;
+
+const StyledSelect = styled.select`
+  border-radius: 45px;
+  /* Add any other styles you want here... */
+`;

@@ -1,15 +1,14 @@
 import styled from "styled-components";
 
 export const ViewPort= styled.div`      
-// margin: 0;
-// padding: 0;
-
-// color: #fff;
-// font-family: 'Roboto', Arial, Helvetica, sans-serif;
-// width: 100vw;
-// height: 100vh;
-
+display: flex;
+flex-direction: column;
+min-height: 100vh;
   
   
  
+`;
+export const MainContent = styled.div`
+  flex-grow: 1;
+  overflow: auto; // add this line
 `;

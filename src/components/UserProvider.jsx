@@ -144,12 +144,12 @@ function UserProvider(props) {
                 GB: 'en',
                 DE: 'de',
                 FR: 'fr',
-                BR: 'pt-BR',
+                BR: 'pt',
                 RU: 'ru',
                 IT: 'it',
-                ES: 'es-MX',
+                ES: 'es',
                 TR: 'tr',
-                CN: 'zh-CN',
+                CN: 'zh',
                 JP: 'ja',
             };
             return languageArray.map((code) => languageMapping[code] || code);
