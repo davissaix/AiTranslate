@@ -1,49 +1,16 @@
-const languageToCountryCode = {
-  'en': 'GB',
-  'de': 'DE',
-  'fr': 'FR',
-  'pt': 'BR',
-  'ru': 'RU',
-  'it': 'IT',
-  'es': 'ES',
-  'tr': 'TR',
-  'zh': 'CN',
-  'ja': 'JP',
-  // add more language to country code mappings if needed
-}
-
-function Modal({ isOpen, onClose, children }) {
-  if (!isOpen) {
-    return null;
-  }
-
+{children.map((child, index) => {
+  const countryCode = languageToCountryCode[responseFlags[index]];
   return (
-    <div>
-      <div>
-        {children.map((child, index) => {
-          const countryCode = languageToCountryCode[mappedArray[index]];
-          return (
-            <TranslationBox key={index}>
-              <ReactCountryFlag
-                className="emojiFlag"
-                countryCode={countryCode}
-                style={{ fontSize: '2em', lineHeight: '2em', marginRight: '1em' }}
-                svg
-              />
-              {child}
-            </TranslationBox>
-          );
-        })}
-      </div>
-      <button onClick={onClose}>Close</button>
-    </div>
+    <TranslationBox key={index}>
+      <RoundedFlagContainer>
+        <ReactCountryFlag
+          className="emojiFlag"
+          countryCode={countryCode}
+          style={{ fontSize: '2em', lineHeight: '2em', marginRight: '1em' }}
+          svg
+        />
+      </RoundedFlagContainer>
+      {child}
+    </TranslationBox>
   );
-}
-
-const TranslationBox = styled.div`
-  display: flex;
-  align-items: center;
-  border: 1px solid black;
-  margin: 1em 0;
-  padding: 1em;
-`;
+})}

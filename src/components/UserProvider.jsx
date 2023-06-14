@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios'
+// import axios from 'axios'
 const UserContext = React.createContext();
 
 
@@ -135,7 +135,7 @@ function UserProvider(props) {
         const selection = [];
         const language = ['GB', 'DE', 'FR', 'BR', 'RU', 'IT', 'ES', 'TR', 'CN', 'JP'];
         languages.map((lang, index) => {
-            if (lang === 0.5) {
+            if (lang === 0.5 && language[index] !== selectedOption.toUpperCase()) {
                 selection.push(language[index]);
             }
         });
@@ -154,19 +154,29 @@ function UserProvider(props) {
             };
             return languageArray.map((code) => languageMapping[code] || code);
         };
-        const mappedArrayLocal = mapLanguageCodes(selection);
+        // Filter out the selected source language
+    const mappedArrayLocal = mapLanguageCodes(selection).filter(code => code !== selectedOption);
         setLangSelected(selection);
         setMappedArray(mappedArrayLocal);
     }
     const [selectedOption, setSelectedOption] = useState('en');
 
     const handleOptionChange = (event) => {
-        const selectedValue = event.target.value;
+        const selectedValue = event.target.value.toLowerCase();
         setSelectedOption(selectedValue);
         console.log('Selected language:', selectedValue);
     };
+    const handleLangChange = (event) => {
+        const selectedValue = event.target.value.toLowerCase();
+        setSelectedOption(selectedValue);
+        const newMappedArray = mappedArray.filter(lang => lang !== selectedValue);
+        setMappedArray(newMappedArray);
+    };
+    
+    
     return (
         <UserContext.Provider value={{
+            handleLangChange,
             mappedArray,
             selectedOption,
             handleOptionChange,
