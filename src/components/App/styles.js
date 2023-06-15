@@ -22,4 +22,11 @@ html, body {
 #root {
   height: 100%;
 }
+:root {
+  --vh: 100vh;
+}
+
+.yourContainerClass {
+  height: var(--vh);
+}
 `;
