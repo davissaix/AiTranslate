@@ -7,6 +7,7 @@ import { UserContext } from '../UserProvider';
 import DropDown from '../DropDown';
 
 function TranslateInput() {
+  const key = process.env.REACT_APP_API_KEY;
   const [inputText, setInputText] = useState('');
   const [response, setResponse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,7 +82,7 @@ function TranslateInput() {
             de: 'a@b.c',
           },
           headers: {
-            'X-RapidAPI-Key': '3730f2a775msh0140bb14ad28e72p170f94jsn65f4586c35c4',
+            'X-RapidAPI-Key': key,
             'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com',
           },
         };
@@ -195,14 +196,24 @@ const Input = styled.input`
     border-bottom: 1px solid #000;
     font-size: 1.5rem;
     border-radius: 45px;
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 600px) {
+        &::placeholder {
+            font-size: 1rem;
+        }
+    }
     
 `
 const Container = styled.div`                   
-height: 100%;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow: auto; // add this to enable scrolling within the container if necessary
 `
 const Container2 = styled.div`                   
 display: flex;

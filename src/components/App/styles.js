@@ -13,16 +13,13 @@ export const MainContent = styled.div`
   overflow: auto; // add this line
 `;
 export const GlobalStyle = styled.div`
-  body {
-    overflow-y: hidden;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  html {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+#root {
+  height: 100%;
+}
 `;
