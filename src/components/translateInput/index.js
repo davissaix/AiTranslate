@@ -226,7 +226,7 @@ margin-bottom: 20px;   // add some margin at the bottom
 const Button = styled.button`
     width: 140px;
     height: 45px;
-    margin-top: 20px;
+    margin-top: 5px;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     text-transform: uppercase;
