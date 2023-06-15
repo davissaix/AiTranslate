@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-// import axios from 'axios'
 const UserContext = React.createContext();
 
 
@@ -124,6 +123,7 @@ function UserProvider(props) {
     }
 
     //--------------maped
+    const [selectedOption, setSelectedOption] = useState('en');
     const [mappedArray, setMappedArray] = useState([]);
     //--------------------------------------------------------------
     //GoButton
@@ -133,39 +133,85 @@ function UserProvider(props) {
     const [LangSelected, setLangSelected] = useState([]);
     function GoButton() {
         const selection = [];
-        const language = ['GB', 'DE', 'FR', 'BR', 'RU', 'IT', 'ES', 'TR', 'CN', 'JP'];
-        languages.map((lang, index) => {
-            if (lang === 0.5 && language[index] !== selectedOption.toUpperCase()) {
-                selection.push(language[index]);
-            }
-        });
-        const mapLanguageCodes = (languageArray) => {
-            const languageMapping = {
-                GB: 'en',
-                DE: 'de',
-                FR: 'fr',
-                BR: 'pt',
-                RU: 'ru',
-                IT: 'it',
-                ES: 'es',
-                TR: 'tr',
-                CN: 'zh',
-                JP: 'ja',
-            };
-            return languageArray.map((code) => languageMapping[code] || code);
+    const language = ['GB', 'DE', 'FR', 'BR', 'RU', 'IT', 'ES', 'TR', 'CN', 'JP'];
+    languages.map((lang, index) => {
+        if (lang === 0.5) {
+            selection.push(language[index]);
+        }
+    });
+    const mapLanguageCodes = (languageArray) => {
+        const languageMapping = {
+            GB: 'en',
+            DE: 'de',
+            FR: 'fr',
+            BR: 'pt',
+            RU: 'ru',
+            IT: 'it',
+            ES: 'es',
+            TR: 'tr',
+            CN: 'zh',
+            JP: 'ja',
         };
-        // Filter out the selected source language
-    const mappedArrayLocal = mapLanguageCodes(selection).filter(code => code !== selectedOption);
-        setLangSelected(selection);
-        setMappedArray(mappedArrayLocal);
+        return languageArray.map((code) => languageMapping[code] || code);
+    };
+    
+    const mappedArrayLocal = mapLanguageCodes(selection);
+    setLangSelected(selection);
+    setMappedArray(mappedArrayLocal);
+    console.log("mappedArrayfromgo:", mappedArray)
+    
     }
-    const [selectedOption, setSelectedOption] = useState('en');
+   
 
     const handleOptionChange = (event) => {
         const selectedValue = event.target.value.toLowerCase();
         setSelectedOption(selectedValue);
         console.log('Selected language:', selectedValue);
-    };
+      
+        // Unselect the flag that corresponds to the selected source language
+        switch (selectedValue) {
+            case 'en':
+                setEnglish(1);
+                setEnglish1('translateY(0px)');
+                break;
+            case 'de':
+                setGermany(1);
+                setGermany1('translateY(0px)');
+                break;
+                case 'fr':
+                    setFrance(1);
+                    setFrance1('translateY(0px)');
+                    break;
+                case 'it':
+                    setItalian(1);
+                    setItalian1('translateY(0px)');
+                    break;
+                case 'es':
+                    setSpanish(1);
+                    setSpanish1('translateY(0px)');
+                    break;
+                case 'ja':
+                    setJapanese(1);
+                    setJapanese1('translateY(0px)');
+                    break;
+                case 'zh':
+                    setChinese(1);
+                    setChinese1('translateY(0px)');
+                    break;
+                case 'pt':
+                    setBrazil(1);
+                    setBrazil1('translateY(0px)');
+                    break;
+                case 'tr':
+                    setTurkish(1);
+                    setTurkish1('translateY(0px)');
+                    break;
+                case 'ru':
+                    setRussian(1);
+                    setRussian1('translateY(0px)');
+                    break;
+        }
+      };
     const handleLangChange = (event) => {
         const selectedValue = event.target.value.toLowerCase();
         setSelectedOption(selectedValue);

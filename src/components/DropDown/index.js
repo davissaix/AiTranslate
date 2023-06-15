@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const DropDown = () => {
   const { selectedOption, handleOptionChange } = React.useContext(UserContext);
   console.log('Selected option:', selectedOption);
+
   return (
     <div>
       

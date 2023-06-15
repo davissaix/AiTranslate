@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import ReactCountryFlag from "react-country-flag";
@@ -10,14 +10,30 @@ function TranslateInput() {
   const [inputText, setInputText] = useState('');
   const [response, setResponse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { LangSelected, selectedOption, mappedArray } = useContext(UserContext);
+  const { LangSelected, selectedOption, mappedArray, setMappedArray, setSelectedOption } = useContext(UserContext);
 
   const [responseFlags, setResponseFlags] = useState([]);
-
+  const [error, setError] = useState(''); // input error, text limit
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isModalOpen]);
 
   const handleInputChange = (event) => {
-    setInputText(event.target.value);
-  };
+    const text = event.target.value;
+    if (text.length > 326) {
+        setError('SORRY （>﹏<） THE TEXT IS TOO LONG');
+    } else {
+        setError(null);   
+    }
+    setInputText(text);
+};
+
 
   const handleTranslateClick = async () => {
     console.log("Translate button clicked");
@@ -43,47 +59,45 @@ function TranslateInput() {
   ));
 
   async function translateText(text, selectedOption, mappedArray) {
-   
-
-
     try {
       console.log("translateText function invoked");
       console.log("mappedArray:", mappedArray);
-      // Filter out the selected source language
-    const filteredArray = mappedArray.filter(code => code !== selectedOption);
-    console.log("filteredArray:", filteredArray);
-
-    // For each language in filteredArray, perform a translation request
-    const responses = await Promise.all(filteredArray.map(async (lang) => {
-      const options = {
-        method: 'GET',
-        url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
-        params: {
-          langpair: `${selectedOption}|${lang}`,
-          q: text,
-          mt: '1',
-          onlyprivate: '0',
-          de: 'a@b.c',
-        },
-        headers: {
-          'X-RapidAPI-Key': '3730f2a775msh0140bb14ad28e72p170f94jsn65f4586c35c4',
-          'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com',
-        },
-      };
+  
+       // For each language in mappedArray, perform a translation request
+    const responses = await Promise.all(mappedArray.map(async (lang) => {
+      // If selected language and current language are the same, return the text as is
+      if (lang === selectedOption) {
+        return text;
+      }
+        
+        const options = {
+          method: 'GET',
+          url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
+          params: {
+            langpair: `${selectedOption}|${lang}`,
+            q: text,
+            mt: '1',
+            onlyprivate: '0',
+            de: 'a@b.c',
+          },
+          headers: {
+            'X-RapidAPI-Key': '3730f2a775msh0140bb14ad28e72p170f94jsn65f4586c35c4',
+            'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com',
+          },
+        };
         const response = await axios.request(options);
         console.log(`Translation Response for ${lang}:`, response.data); // log the full response data for each language
         const matches = response.data.matches;
         const translations = matches.map(match => match.translation.toLowerCase());
         const uniqueTranslations = new Set(translations);
         const finalTranslation = Array.from(uniqueTranslations).join(" / ");
-
+  
         return finalTranslation;
-        
       }));
-
+  
       // Set the responses array as the response state
       setResponse(responses);
-      setResponseFlags(filteredArray);
+      setResponseFlags(mappedArray); // Use the original mappedArray
       setIsModalOpen(true);
     } catch (error) {
       console.error(error);
@@ -91,6 +105,7 @@ function TranslateInput() {
     console.log("selectedOption",selectedOption.length)
     console.log("mappedArray:", mappedArray)
   }
+  
   const languageToCountryCode = {
     'en': 'GB',
     'de': 'DE',
@@ -111,6 +126,7 @@ function TranslateInput() {
 
     return (
       <div>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <div>
           {children.map((child, index) => {
             const countryCode = languageToCountryCode[responseFlags[index]];
@@ -139,6 +155,7 @@ function TranslateInput() {
       </div>
     );
   }
+  
 
   return (
     <Container>
@@ -149,7 +166,7 @@ function TranslateInput() {
       <Container2>
         <p>from</p>
         <DropDown />
-        <Input type="text" style={{ padding: 0, margin: 0 }} value={inputText} onChange={handleInputChange} placeholder="What do you want to translate?" />
+        <Input type="text" maxLength="327" style={{ padding: 0, margin: 0 }} value={inputText} onChange={handleInputChange} placeholder={"What do you want to translate?"} />
       </Container2>
 
       <Button onClick={handleTranslateClick}>Translate</Button>
@@ -265,4 +282,17 @@ const FlexContainer = styled.div`
 const TranslationText = styled.div`
     /* additional styles */
     word-break: break-word; /* to prevent overflow by breaking the word */
+`;
+const ErrorMessage = styled.div`
+    color: yellow;
+    margin-left: 2em
+`
+const Modal = styled.div`
+  position: fixed; // make it fixed
+  top: 0; // stretch from the very top
+  left: 0; // stretch from the very left
+  width: 100%; // take up full width
+  height: 100%; // take up full height
+  overflow-y: auto; // make it vertically scrollable
+  // Add any other styles as needed.
 `;

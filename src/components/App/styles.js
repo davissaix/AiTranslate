@@ -12,3 +12,17 @@ export const MainContent = styled.div`
   flex-grow: 1;
   overflow: auto; // add this line
 `;
+export const GlobalStyle = styled.div`
+  body {
+    overflow-y: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`;

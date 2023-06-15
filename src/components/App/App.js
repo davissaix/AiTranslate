@@ -1,13 +1,15 @@
 import React from 'react';
 import Header from '../header/Header';
-import { ViewPort, MainContent } from './styles';
+import { ViewPort, MainContent, GlobalStyle } from './styles';
 import Footer from '../footer/Footer';
 import Layout from '../../container/Layout';
 
 
 function App() {
   return (
+    
     <ViewPort className="App">
+      <GlobalStyle/>
       <Header/>
       <MainContent>
          <Layout />
