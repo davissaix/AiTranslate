@@ -4,6 +4,7 @@ import ReactCountryFlag from "react-country-flag"
 import {List, Container, Flag} from './styles'
 import { Link } from "react-router-dom";
 import { UserContext } from '../UserProvider'
+import Footer from '../footer/Footer';
 
 
 
@@ -186,7 +187,7 @@ function CountryFlags({ sendChildToParent }) {
                 <Button onClick={GoButton}>Go</Button>
                 </Link>
             </div>
-            
+            <Footer/>
         </Container>
     )
 }

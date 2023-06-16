@@ -11,7 +11,7 @@ export const List = styled.div`
 `
 export const Container = styled.div` 
 
-    height: 100%;
+    height: 88vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
+
 import axios from 'axios';
 import styled from 'styled-components';
 import ReactCountryFlag from "react-country-flag";
 import { UserContext } from '../UserProvider';
-// import LanguageFlags from '../LanguageFlags';
+import Footer from '../footer/Footer';
 import DropDown from '../DropDown';
 
 function TranslateInput() {
@@ -24,7 +25,24 @@ function TranslateInput() {
   
     return () => { document.body.style.overflow = 'unset'; };
   }, [isModalOpen]);
+  useEffect(() => {
+    console.log('Setting --vh value...');
+    const setVhVariable = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      console.log('--vh value:', getComputedStyle(document.documentElement).getPropertyValue('--vh'));
 
+    };
+  
+    setVhVariable();  // Initial setting
+    window.addEventListener('resize', setVhVariable);  // Update when window is resized
+  
+    // Cleanup after unmount
+    return () => {
+      window.removeEventListener('resize', setVhVariable);
+    };
+  }, []);
+  
   const handleInputChange = (event) => {
     const text = event.target.value;
     if (text.length > 326) {
@@ -155,8 +173,11 @@ function TranslateInput() {
           })}
         </div>
         <RightAlignContainer>
+          
           <CloseButton onClick={onClose}>Close</CloseButton>
+          
         </RightAlignContainer>
+        <Footer/>
       </div>
     );
   }
@@ -189,7 +210,9 @@ function TranslateInput() {
         ) : (
           <div>No translations available.</div>
         )}
+        
       </Modal>
+      {!isModalOpen && <Footer/>}
     </Container>
   );
 }
@@ -217,15 +240,18 @@ const Input = styled.input`
     
 `
 const Container = styled.div`                   
-    height: 100%;
+    height: calc(var(--vh) * 88);
+    width:100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box
     overflow: auto; // add this to enable scrolling within the container if necessary
 `
 const Container2 = styled.div`                   
 display: flex;
+width:100%;
 flex-wrap: wrap;
 gap: 5vw;
 justify-content: center;
@@ -238,6 +264,8 @@ display: flex;
   align-items: center;  // center items horizontally
   gap: 5vw;
   margin-button: 1.5px;
+ 
+  
 
 `
 const Container4 = styled.div`                   
@@ -248,9 +276,10 @@ justify-content: center;
 align-items: center;
 `
 const Button = styled.button`
-    width: 140px;
+    width: 40vw;
     height: 45px;
-    margin-top: 5px;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     text-transform: uppercase;
@@ -276,15 +305,19 @@ const Button = styled.button`
 `
 const RightAlignContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
+  width:100%;
+  gap:1.5em;
+ 
 `
 
 const TranslationBox = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid black;
-  margin: 1em 0;
-  padding: 1em;
+  margin: 0 1em;
+  padding: 0.3em 0;
+  margin-bottom 0.3em;
 `
 const CloseButton = styled.button`
 border-radius: 45px;
@@ -313,10 +346,11 @@ const RoundedFlagContainer = styled.div`
 const FlexContainer = styled.div`
     display: flex;
     align-items: center; /* align vertical */
+    padding: 0 0.5em 0 0.5em;
 `;
 
 const TranslationText = styled.div`
-    /* additional styles */
+    box-sizing: border-box;
     word-break: break-word; /* to prevent overflow by breaking the word */
 `;
 const ErrorMessage = styled.div`
@@ -324,17 +358,13 @@ const ErrorMessage = styled.div`
     margin-left: 2em
 `
 const Modal = styled.div`
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-overflow-y: auto;
-display: flex;
-justify-content: center;
-align-items: center;
-z-index: 1000; // ensure it's on top of other content
-background-color: rgba(0, 0, 0, 0.5); 
+  
+  width:100vw;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-x: hidden; // prevent horizontal scrolling
+  overflow-y: scroll; // allow vertical scrolling
+  
 `;
 const GoBackButton = styled.button`
   justify-self: start;
@@ -349,7 +379,8 @@ const GoBackButton = styled.button`
 const ContainerButton = styled.div`                   
 display: flex;
 justify-content: flex-start;
-width: 100%;
-margin-left: 5em;
+width: 100vw;
+padding-left: 3em;
+box-sizing: border-box;
 
 `

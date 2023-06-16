@@ -4,7 +4,7 @@ import { ViewPort } from './styles'
 const Footer = () => {
   return (
     <ViewPort>
-        <p>David Ávila Right Reserved </p>
+        <p>David .A Right Reserved </p>
 
     </ViewPort>
   )
