@@ -237,7 +237,7 @@ display: flex;
   flex-direction: column;  // align items in a column
   align-items: center;  // center items horizontally
   gap: 5vw;
-  margin-button: 5px;
+  margin-button: 1.5px;
 
 `
 const Container4 = styled.div`                   
