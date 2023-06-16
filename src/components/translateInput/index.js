@@ -297,6 +297,7 @@ border-radius: 45px;
   margin-top: 1em;
   margin-right: 1em;
   transition: all 0.3s ease 0s;
+  outline: none;
 
   &:hover {
     background-color: #2EE59D;
@@ -335,6 +336,7 @@ const GoBackButton = styled.button`
   justify-self: start;
   border-radius: 45px;
   transition: all 0.3s ease 0s;
+  outline: none;
 
   &:hover {
     background-color: #2EE59D;
