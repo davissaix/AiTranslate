@@ -324,13 +324,17 @@ const ErrorMessage = styled.div`
     margin-left: 2em
 `
 const Modal = styled.div`
-  position: fixed; // make it fixed
-  top: 0; // stretch from the very top
-  left: 0; // stretch from the very left
-  width: 100%; // take up full width
-  height: 100%; // take up full height
-  overflow-y: auto; // make it vertically scrollable
-  // Add any other styles as needed.
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+overflow-y: auto;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000; // ensure it's on top of other content
+background-color: rgba(0, 0, 0, 0.5); 
 `;
 const GoBackButton = styled.button`
   justify-self: start;
