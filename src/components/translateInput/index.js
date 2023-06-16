@@ -370,7 +370,8 @@ const GoBackButton = styled.button`
   justify-self: start;
   border-radius: 45px;
   transition: all 0.3s ease 0s;
-  outline: none;
+  border: none;
+  border-bottom: 1px solid #000;
 
   &:hover {
     background-color: #2EE59D;
