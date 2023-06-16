@@ -237,12 +237,13 @@ display: flex;
   flex-direction: column;  // align items in a column
   align-items: center;  // center items horizontally
   gap: 5vw;
+  margin-button: 5px;
 
 `
 const Container4 = styled.div`                   
 display: flex;
 flex-wrap: wrap;
-gap: 5vw;
+gap: 2vw;
 justify-content: center;
 align-items: center;
 `
@@ -337,8 +338,6 @@ const GoBackButton = styled.button`
 
   &:hover {
     background-color: #2EE59D;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-    color: #f4f4f4;
   }
 `;
 const ContainerButton = styled.div`                   
