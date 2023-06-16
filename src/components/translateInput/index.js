@@ -120,6 +120,10 @@ function TranslateInput() {
     'ja': 'JP',
     // add more language to country code mappings if needed
   }
+  const goBack = () => {
+    window.history.back();
+  }
+
   function Modal({ isOpen, onClose, children }) {
     if (!isOpen) {
       return null;
@@ -164,11 +168,16 @@ function TranslateInput() {
         {countryFlags}
       </Container2>
 
-      <Container2>
-        <p>from</p>
-        <DropDown />
-        <Input type="text" maxLength="327" style={{ padding: 0, margin: 0 }} value={inputText} onChange={handleInputChange} placeholder={"What do you want to translate?"} />
-      </Container2>
+      <Container3>
+        <Container4>
+          <p>from</p>
+          <DropDown />
+        </Container4>
+        <ContainerButton>
+          <GoBackButton onClick={goBack}>&lt;&lt;GoBack</GoBackButton>
+        </ContainerButton>
+       <Input type="text" maxLength="327" style={{ padding: 0, margin: 0 }} value={inputText} onChange={handleInputChange} placeholder={"What do you want to translate?"} />
+      </Container3>
 
       <Button onClick={handleTranslateClick}>Translate</Button>
       
@@ -223,6 +232,20 @@ justify-content: center;
 align-items: center;
 margin-bottom: 20px;   // add some margin at the bottom
 `
+const Container3 = styled.div`                   
+display: flex;
+  flex-direction: column;  // align items in a column
+  align-items: center;  // center items horizontally
+  gap: 5vw;
+
+`
+const Container4 = styled.div`                   
+display: flex;
+flex-wrap: wrap;
+gap: 5vw;
+justify-content: center;
+align-items: center;
+`
 const Button = styled.button`
     width: 140px;
     height: 45px;
@@ -275,8 +298,8 @@ border-radius: 45px;
   transition: all 0.3s ease 0s;
 
   &:hover {
-    background-color: #333;
-    color: #f4f4f4;
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
   }
 `
 
@@ -307,3 +330,21 @@ const Modal = styled.div`
   overflow-y: auto; // make it vertically scrollable
   // Add any other styles as needed.
 `;
+const GoBackButton = styled.button`
+  justify-self: start;
+  border-radius: 45px;
+  transition: all 0.3s ease 0s;
+
+  &:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #f4f4f4;
+  }
+`;
+const ContainerButton = styled.div`                   
+display: flex;
+justify-content: flex-start;
+width: 100%;
+margin-left: 5em;
+
+`

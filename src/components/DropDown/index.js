@@ -31,5 +31,13 @@ export default DropDown;
 
 const StyledSelect = styled.select`
   border-radius: 45px;
-  /* Add any other styles you want here... */
+  transition: all 0.3s ease 0s;
+    cursor: pointer;
+    
+    }
+  
+  &:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  }
 `;
