@@ -139,8 +139,8 @@ function TranslateInput() {
     // add more language to country code mappings if needed
   }
   const goBack = () => {
-    window.history.back();
-  }
+    window.location.href = "/";
+}
 
   function Modal({ isOpen, onClose, children }) {
     if (!isOpen) {
@@ -197,11 +197,15 @@ function TranslateInput() {
         <ContainerButton>
           <GoBackButton onClick={goBack}>&lt;&lt;GoBack</GoBackButton>
         </ContainerButton>
-       <Input type="text" maxLength="327" style={{ padding: 0, margin: 0 }} value={inputText} onChange={handleInputChange} placeholder={"What do you want to translate?"} />
+        <StyledForm onSubmit={(e) => {
+          e.preventDefault();
+          handleTranslateClick();
+        }}>
+          <Input type="text" maxLength="327" style={{ padding: 0, margin: 0 }} value={inputText} onChange={handleInputChange} placeholder={"What do you want to translate?"} />
+          <Button type="submit">Translate</Button>
+        </StyledForm>
       </Container3>
 
-      <Button onClick={handleTranslateClick}>Translate</Button>
-      
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {response !== null ? (
           response.map((translatedText, index) => (
@@ -210,12 +214,12 @@ function TranslateInput() {
         ) : (
           <div>No translations available.</div>
         )}
-        
       </Modal>
       {!isModalOpen && <Footer/>}
     </Container>
   );
 }
+
 
 export default TranslateInput;
 
@@ -385,3 +389,9 @@ padding-left: 3em;
 box-sizing: border-box;
 
 `
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

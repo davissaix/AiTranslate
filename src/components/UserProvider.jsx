@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 const UserContext = React.createContext();
 
 
@@ -123,14 +123,17 @@ function UserProvider(props) {
     }
 
     //--------------maped
-    const [selectedOption, setSelectedOption] = useState('en');
+    const [selectedOption, setSelectedOption] = useState('es');
     const [mappedArray, setMappedArray] = useState([]);
     //--------------------------------------------------------------
     //GoButton
 
     const languages = [english, germany, france, brazil, russian, italian, spanish, turkish, chinese, japanese]
     // const LangSelected = []
-    const [LangSelected, setLangSelected] = useState([]);
+    // Load saved language selection from local storage, defaulting to an empty array if not found
+const savedLangSelection = JSON.parse(localStorage.getItem('langSelection')) || [];
+const [LangSelected, setLangSelected] = useState(savedLangSelection);
+
     function GoButton() {
         const selection = [];
     const language = ['GB', 'DE', 'FR', 'BR', 'RU', 'IT', 'ES', 'TR', 'CN', 'JP'];
@@ -218,6 +221,10 @@ function UserProvider(props) {
         const newMappedArray = mappedArray.filter(lang => lang !== selectedValue);
         setMappedArray(newMappedArray);
     };
+     // Save language selection to localStorage whenever it changes
+     useEffect(() => {
+        localStorage.setItem('langSelection', JSON.stringify(LangSelected));
+    }, [LangSelected]);
     
     
     return (
